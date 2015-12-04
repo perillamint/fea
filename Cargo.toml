@@ -1,0 +1,6 @@
+[package]
+name = "fea"
+version = "0.1.0"
+authors = ["perillamint <perillamint@gentoo.moe>"]
+
+[dependencies]
