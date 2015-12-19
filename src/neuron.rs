@@ -1,10 +1,10 @@
 
-pub struct Dendrite {
-    source: Neuron,
+pub struct Dendrite<'a> {
+    source: &'a Neuron,
     weight: i32
 }
 
-pub struct Neuron {
+pub struct Neuron<'a> {
     dendrites: Vec<Dendrite>,
     threshold: i32,
     result_new: i32,
@@ -49,7 +49,13 @@ impl Neuron {
         }
     }
 
-    pub fn add_dendrite(&mut self, dendrite: Dendrite) {
+    pub fn add_dendrite(&mut self, source: &Neuron, weight: i32) {
+
+        let dendrite = Dendrite {
+            source: source,
+            weight: weight,
+        };
+
         let idx = self.search_dendrite(&dendrite.source);
 
         match idx {
@@ -95,7 +101,10 @@ impl Neuron {
 }
 
 #[test]
-fn hello() {
-    println!("Hello!");
-}
+fn test_setup() {
+    let neuron1 = Neuron::new(1);
+    let neuron2 = Neuron::new(1);
 
+    neuron1.add_dendrite(&neuron2, 1);
+    neuron2.add_dendrite(&neuron1, 1);
+}
